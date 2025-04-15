@@ -3,7 +3,14 @@ import { JobPost } from "@/types";
 import { useAuth } from "@/context/provider";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Text, ScrollView, ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  ActivityIndicator,
+  TouchableOpacity,
+} from "react-native";
+import { router } from "expo-router";
 
 const dashboard = () => {
   const { user } = useAuth();
@@ -59,11 +66,29 @@ const dashboard = () => {
               job.createdAt
             ).getFullYear()}`;
             return (
-              <View
+              <TouchableOpacity
                 key={idx}
+                onPress={() =>
+                  router.push({
+                    pathname: `/apply/${job.id}` as any,
+                    params: {
+                      jobTitle: job.title,
+                      company: job.company,
+                      postedAt: formattedDate,
+                      description: job.description,
+                    },
+                  })
+                }
                 className="bg-white rounded-lg p-4 shadow-md border border-gray-200"
               >
-                <Text className="text-lg font-bold mb-1">{job.title}</Text>
+                <View className="w-full flex-row items-center justify-between">
+                  <Text className="text-lg font-bold mb-1">{job.title}</Text>
+                  <View className="py-1 px-3 bg-blue-100 rounded-md">
+                    <Text className="text-sm font-psemibold text-blue-600">
+                      Apply
+                    </Text>
+                  </View>
+                </View>
                 <Text className="text-base text-gray-600">{job.company}</Text>
                 <Text className="text-sm text-gray-700 mb-3">
                   {truncatedDescription}
@@ -71,7 +96,7 @@ const dashboard = () => {
                 <Text className="text-xs text-gray-500 self-end">
                   Posted on: {formattedDate}
                 </Text>
-              </View>
+              </TouchableOpacity>
             );
           })
         ) : (

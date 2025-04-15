@@ -37,6 +37,17 @@ const TabLayout = () => {
         }}
       />
       <Tabs.Screen
+        name="appliedjobs"
+        options={{
+          title: "Applied Jobs",
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <Icon name="folder-open" size={24} color={color} />
+          ),
+          href: role === "APPLICANT" ? undefined : null,
+        }}
+      />
+      <Tabs.Screen
         name="home"
         options={{
           title: "Home",

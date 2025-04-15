@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, ScrollView, TouchableOpacity, Alert } from "react-native";
 
 const profile = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, role } = useAuth();
   const initial = user?.name ? user?.name.charAt(0) : "?";
 
   const handleLogout = () => {
@@ -32,7 +32,9 @@ const profile = () => {
           <View className="w-24 h-24 rounded-full bg-blue-500 items-center justify-center mb-4">
             <Text className="text-4xl font-semibold text-white">{initial}</Text>
           </View>
-          <Text className="text-2xl font-bold">{user?.name}</Text>
+          <Text className="text-2xl font-bold text-center">
+            {user?.name} ({role === "EMPLOYER" ? "Employer" : "Applicant"})
+          </Text>
         </View>
         <View className="px-4 py-2">
           <Text className="text-base text-gray-500 mb-1">

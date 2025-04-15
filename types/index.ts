@@ -36,3 +36,27 @@ export interface JobPost {
   postedBy: string;
   createdAt: string;
 }
+
+interface Status {
+  id: string;
+  reviewedAt: string;
+  reviewerEmail: string;
+  state: "PENDING" | "APPROVED" | "REJECTED";
+}
+
+export interface JobApplication {
+  id: string;
+  jobId: string;
+  status: Status;
+  message: string;
+  jobTitle: string;
+  resumeUrl: string;
+  appliedAt: string;
+  applicantName: string;
+}
+
+export interface JobPostData {
+  title: string;
+  description: string;
+  company: string;
+}
