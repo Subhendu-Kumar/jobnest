@@ -1,5 +1,6 @@
 export interface AuthContextProps {
   user: User | null;
+  role: UserRole | null;
   loading: boolean;
   isAuthenticated: boolean;
   logout: () => Promise<void>;
@@ -25,4 +26,13 @@ export interface SignUpSchema {
 export interface SignInSchema {
   email: string;
   password: string;
+}
+
+export interface JobPost {
+  id: string;
+  title: string;
+  description: string;
+  company: string;
+  postedBy: string;
+  createdAt: string;
 }

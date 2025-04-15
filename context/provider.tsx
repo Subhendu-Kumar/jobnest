@@ -5,6 +5,7 @@ import {
   saveRole,
   saveToken,
   clearUserData,
+  getRole,
 } from "@/lib/utils";
 import { AuthContextProps, User, UserRole } from "@/types";
 import React, { createContext, useContext, useEffect, useState } from "react";
@@ -14,14 +15,17 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUserState] = useState<User | null>(null);
+  const [role, setRole] = useState<UserRole | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const initAuth = async () => {
       const token = await getToken();
       const userInfo = await getUser();
+      const role = await getRole();
       setIsAuthenticated(!!token && !!userInfo);
       setUserState(userInfo);
+      setRole(role);
       setLoading(false);
     };
     initAuth();
@@ -45,6 +49,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     <AuthContext.Provider
       value={{
         user,
+        role,
         login,
         logout,
         loading,

@@ -13,10 +13,14 @@ import { useAuth } from "@/context/provider";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Home = () => {
-  const { loading, isAuthenticated } = useAuth();
+  const { loading, isAuthenticated, role } = useAuth();
 
   if (!loading && isAuthenticated) {
-    return router.replace("/home");
+    if (role === "APPLICANT") {
+      return router.replace("/dashboard");
+    } else {
+      return router.replace("/home");
+    }
   }
 
   return (
