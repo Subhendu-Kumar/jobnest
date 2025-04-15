@@ -3,66 +3,52 @@ import {
   Text,
   Image,
   Alert,
+  TextInput,
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
-  TextInput,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-// import axios from "axios";
-// import { BASE_URL } from "@/config";
+import axios from "axios";
+import { BASE_URL } from "@/config";
 import { images } from "@/constants";
+import { SignUpSchema } from "@/types";
 import React, { useState } from "react";
-// import { FormStateSignUp } from "@/types";
 import { Link, router } from "expo-router";
-// import FormField from "@/components/FormField";
+import { Picker } from "@react-native-picker/picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const signup = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<SignUpSchema>({
     name: "",
     email: "",
     password: "",
     mobileNo: "",
-    role: "",
+    role: "APPLICANT",
   });
 
   const submit = async () => {
     console.log(form);
-    // if (!form.username || !form.email || !form.password) {
-    //   Alert.alert("Error", "Please fill all the fields");
-    //   return;
-    // }
-    // setIsSubmitting(true);
-    // try {
-    //   await axios.post(`${BASE_URL}/register/`, form);
-    //   router.replace("/signin");
-    // } catch (error: any) {
-    //   if (error.response && error.response.data) {
-    //     const errorData = error.response.data;
-    //     let messages = [];
-    //     if (typeof errorData === "object") {
-    //       for (const key in errorData) {
-    //         if (Array.isArray(errorData[key])) {
-    //           errorData[key].forEach((msg) => {
-    //             messages.push(`${key}: ${msg}`);
-    //           });
-    //         } else {
-    //           messages.push(`${key}: ${errorData[key]}`);
-    //         }
-    //       }
-    //     } else {
-    //       messages.push("Something went wrong. Please try again.");
-    //     }
-    //     Alert.alert("Error", messages.join("\n"));
-    //   } else {
-    //     Alert.alert("Error", "Something went wrong. Please try again.");
-    //   }
-    //   console.log(error);
-    // } finally {
-    //   setIsSubmitting(false);
-    // }
+    if (
+      !form.name ||
+      !form.email ||
+      !form.password ||
+      !form.mobileNo ||
+      !form.role
+    ) {
+      Alert.alert("Error", "Please fill all the fields");
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      await axios.post(`${BASE_URL}/api/v1/users/signup`, form);
+      router.replace("/signin");
+    } catch (error: any) {
+      Alert.alert("Error", "Something went wrong. Please try again.");
+      console.log(error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -86,13 +72,11 @@ const signup = () => {
               onValueChange={(itemValue) =>
                 setForm({ ...form, role: itemValue })
               }
-              style={{ height: 48 }} // Native style needed here
-              dropdownIconColor="#6366F1" // optional, for Indigo color
+              style={{ height: 48 }}
+              dropdownIconColor="#6366F1"
             >
-              <Picker.Item label="Select your role" value="" />
-              <Picker.Item label="Student" value="student" />
-              <Picker.Item label="Recruiter" value="recruiter" />
-              <Picker.Item label="HR" value="hr" />
+              <Picker.Item label="Applicant" value="APPLICANT" />
+              <Picker.Item label="Employer" value="EMPLOYER" />
             </Picker>
           </View>
         </View>
@@ -136,6 +120,7 @@ const signup = () => {
         </View>
         <TouchableOpacity
           onPress={submit}
+          disabled={isSubmitting}
           className="w-full bg-purple-400 mt-6 rounded-lg justify-center items-center p-2"
         >
           {isSubmitting ? (

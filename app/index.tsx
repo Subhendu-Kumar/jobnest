@@ -9,15 +9,15 @@ import {
 import { router } from "expo-router";
 import { images } from "../constants";
 import { StatusBar } from "expo-status-bar";
-//   import { useAuth } from "@/context/provider";
+import { useAuth } from "@/context/provider";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Home = () => {
-  // const { loading, isAuthenticated } = useAuth();
+  const { loading, isAuthenticated } = useAuth();
 
-  // if (!loading && isAuthenticated) {
-  // //   return router.replace("/home");
-  // }
+  if (!loading && isAuthenticated) {
+    return router.replace("/home");
+  }
 
   return (
     <SafeAreaView className="h-full bg-white">
@@ -42,18 +42,18 @@ const Home = () => {
             your gateway to discovering endless career possibilities.
           </Text>
           <TouchableOpacity
-            //   disabled={loading}
-              onPress={() => router.push(`/signin`)}
+            disabled={loading}
+            onPress={() => router.push(`/signin`)}
             className="w-full bg-purple-400 mt-6 rounded-lg justify-center items-center p-2"
           >
             <Text className="text-white text-center font-psemibold text-lg">
-              {/* {loading ? (
-                  <ActivityIndicator color="#fff" />
-                ) : ( */}
-              <Text className="text-center font-psemibold text-white">
-                Get Started
-              </Text>
-              {/* )} */}
+              {loading ? (
+                <ActivityIndicator color="#fff" />
+              ) : (
+                <Text className="text-center font-psemibold text-white">
+                  Get Started
+                </Text>
+              )}
             </Text>
           </TouchableOpacity>
         </View>

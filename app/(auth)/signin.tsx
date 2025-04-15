@@ -3,65 +3,50 @@ import {
   Text,
   Image,
   Alert,
+  TextInput,
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
-  TextInput,
 } from "react-native";
-// import axios from "axios";
-// import { BASE_URL } from "@/config";
+import axios from "axios";
+import { BASE_URL } from "@/config";
 import { images } from "@/constants";
+import { SignInSchema } from "@/types";
 import React, { useState } from "react";
-// import { FormStateSignIn } from "@/types";
 import { Link, router } from "expo-router";
-// import { useAuth } from "@/context/provider";
-// import FormField from "@/components/FormField";
+import { useAuth } from "@/context/provider";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const signin = () => {
-  // const { login } = useAuth();
+  const { login } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<SignInSchema>({
     email: "",
     password: "",
   });
 
   const submit = async () => {
-    // if (!form.email || !form.password) {
-    //   Alert.alert("Error", "Please fill all the fields");
-    //   return;
-    // }
-    // setIsSubmitting(true);
-    // try {
-    //   const res = await axios.post(`${BASE_URL}/login/`, form);
-    //   const data = res.data;
-    //   await login(data.token, data.user);
-    //   router.replace("/home");
-    // } catch (error: any) {
-    //   if (error.response && error.response.data) {
-    //     const errorData = error.response.data;
-    //     let messages = [];
-    //     if (typeof errorData === "object") {
-    //       for (const key in errorData) {
-    //         if (Array.isArray(errorData[key])) {
-    //           errorData[key].forEach((msg) => {
-    //             messages.push(`${key}: ${msg}`);
-    //           });
-    //         } else {
-    //           messages.push(`${key}: ${errorData[key]}`);
-    //         }
-    //       }
-    //     } else {
-    //       messages.push("Something went wrong. Please try again.");
-    //     }
-    //     Alert.alert("Error", messages.join("\n"));
-    //   } else {
-    //     Alert.alert("Error", "Something went wrong. Please try again.");
-    //   }
-    //   console.log(error);
-    // } finally {
-    //   setIsSubmitting(false);
-    // }
+    if (!form.email || !form.password) {
+      Alert.alert("Error", "Please fill all the fields");
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      const res = await axios.post(`${BASE_URL}/api/v1/users/login`, form);
+      const data = res.data;
+      const user = {
+        mobileNo: data.mobileNo,
+        email: data.email,
+        name: data.name,
+      };
+      await login(data.token, user, data.role);
+      router.replace("/home");
+    } catch (error: any) {
+      Alert.alert("Error", "Something went wrong. Please try again.");
+      console.log(error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
