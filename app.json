@@ -37,6 +37,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "b9b1937e-1b71-41ca-a3fe-0eabef9bd7dd"
+      }
+    },
+    "owner": "subhendu_kumar"
   }
 }
