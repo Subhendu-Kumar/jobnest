@@ -1,14 +1,18 @@
 import React from "react";
 import { Platform } from "react-native";
-import { Redirect, Tabs } from "expo-router";
+import { router, Tabs } from "expo-router";
 import { useAuth } from "@/context/provider";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 const TabLayout = () => {
-  const { role } = useAuth();
+  const { role, loading } = useAuth();
+
+  if (loading) {
+    return null;
+  }
 
   if (!role) {
-    return <Redirect href="/signin" />;
+    router.replace("/signin");
   }
 
   return (

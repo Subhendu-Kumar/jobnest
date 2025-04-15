@@ -60,3 +60,22 @@ export interface JobPostData {
   description: string;
   company: string;
 }
+
+
+export type ApplicationStatus = {
+  id: string;
+  reviewerEmail: string;
+  state: "PENDING" | "ACCEPTED" | "REJECTED";
+  reviewedAt: string | null;
+};
+
+export type Application = {
+  id: string;
+  jobId: string;
+  jobTitle: string;
+  applicantName: string;
+  resumeUrl: string;
+  message: string;
+  status: ApplicationStatus;
+  appliedAt: string;
+};

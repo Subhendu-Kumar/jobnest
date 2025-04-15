@@ -42,7 +42,8 @@ const signin = () => {
       await login(data.token, user, data.role);
       if (data.role === "EMPLOYER") {
         router.replace("/home");
-      } else {
+      }
+      if (data.role === "APPLICANT") {
         router.replace("/dashboard");
       }
     } catch (error: any) {

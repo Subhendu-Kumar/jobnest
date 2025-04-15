@@ -54,10 +54,10 @@ const dashboard = () => {
           <View className="w-full h-60 items-center justify-center flex-1">
             <ActivityIndicator size="large" color="#000000" />
           </View>
-        ) : jobs.length > 0 ? (
+        ) : jobs?.length > 0 ? (
           jobs.map((job, idx) => {
             const truncatedDescription =
-              job.description.length > 40
+              job?.description?.length > 40
                 ? `${job.description.substring(0, 40)}...`
                 : job.description;
             const formattedDate = `${new Date(
@@ -79,7 +79,7 @@ const dashboard = () => {
                     },
                   })
                 }
-                className="bg-white rounded-lg p-4 shadow-md border border-gray-200"
+                className="bg-white rounded-lg p-4 shadow-md border border-gray-200 mb-3"
               >
                 <View className="w-full flex-row items-center justify-between">
                   <Text className="text-lg font-bold mb-1">{job.title}</Text>

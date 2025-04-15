@@ -18,16 +18,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [role, setRole] = useState<UserRole | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  const initAuth = async () => {
+    const token = await getToken();
+    const userInfo = await getUser();
+    const role = await getRole();
+    setIsAuthenticated(!!token && !!userInfo);
+    setUserState(userInfo);
+    setRole(role);
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const initAuth = async () => {
-      const token = await getToken();
-      const userInfo = await getUser();
-      const role = await getRole();
-      setIsAuthenticated(!!token && !!userInfo);
-      setUserState(userInfo);
-      setRole(role);
-      setLoading(false);
-    };
     initAuth();
   }, []);
 

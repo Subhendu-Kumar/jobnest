@@ -11,17 +11,20 @@ import { images } from "../constants";
 import { StatusBar } from "expo-status-bar";
 import { useAuth } from "@/context/provider";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useEffect } from "react";
 
 const Home = () => {
   const { loading, isAuthenticated, role } = useAuth();
 
-  if (!loading && isAuthenticated) {
-    if (role === "APPLICANT") {
-      return router.replace("/dashboard");
-    } else {
-      return router.replace("/home");
+  useEffect(() => {
+    if (!loading && isAuthenticated) {
+      if (role === "APPLICANT") {
+        router.replace("/dashboard");
+      } else {
+        router.replace("/home");
+      }
     }
-  }
+  }, [loading, isAuthenticated, role]);
 
   return (
     <SafeAreaView className="h-full bg-white">

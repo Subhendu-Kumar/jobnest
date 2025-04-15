@@ -44,20 +44,23 @@ const create = () => {
     }
     if (!jobData.description.trim()) {
       newErrors.description = "Job description is required";
-    } else if (jobData.description.trim().length < 50) {
+    } else if (jobData.description.trim()?.length < 50) {
       newErrors.description = "Description should be at least 50 characters";
+    } else if (jobData.description.trim()?.length > 150) {
+      newErrors.description = "Description should be at most 150 characters";
     }
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return Object.keys(newErrors)?.length === 0;
   };
 
   const handleSubmit = async () => {
     if (!validateForm()) {
       return;
     }
+    console.log(jobData);
     setIsSubmitting(true);
     try {
-      const res = await API.post("/jobs", { jobData });
+      const res = await API.post("/jobs", jobData);
       console.log(res.data);
       setJobData({
         title: "",

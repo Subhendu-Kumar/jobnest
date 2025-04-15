@@ -103,7 +103,7 @@ const appliedjobs = () => {
             <Text className="text-white font-medium">Try Again</Text>
           </TouchableOpacity>
         </View>
-      ) : applications.length === 0 ? (
+      ) : applications?.length === 0 ? (
         <View className="flex-1 justify-center items-center px-4">
           <Text className="text-lg text-gray-600 mb-2">
             No applications yet

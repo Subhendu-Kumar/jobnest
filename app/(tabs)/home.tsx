@@ -54,11 +54,11 @@ const home = () => {
           <View className="w-full h-60 items-center justify-center flex-1">
             <ActivityIndicator size="large" color="#000000" />
           </View>
-        ) : jobs.length > 0 ? (
+        ) : jobs?.length > 0 ? (
           jobs.map((job, idx) => {
             const truncatedDescription =
-              job.description.length > 40
-                ? `${job.description.substring(0, 40)}...`
+              job.description?.length > 40
+                ? `${job?.description?.substring(0, 40)}...`
                 : job.description;
             const formattedDate = `${new Date(
               job.createdAt
@@ -68,24 +68,17 @@ const home = () => {
             return (
               <TouchableOpacity
                 key={idx}
-                // onPress={() =>
-                //   router.push({
-                //     pathname: `/apply/${job.id}` as any,
-                //     params: {
-                //       jobTitle: job.title,
-                //       company: job.company,
-                //       postedAt: formattedDate,
-                //       description: job.description,
-                //     },
-                //   })
-                // }
-                className="bg-white rounded-lg p-4 shadow-md border border-gray-200"
+                activeOpacity={0.8}
+                onPress={() =>
+                  router.push(`/viewapplications/${job.id}` as any)
+                }
+                className="bg-white rounded-lg p-4 shadow-md border border-gray-200 mb-3"
               >
                 <View className="w-full flex-row items-center justify-between">
                   <Text className="text-lg font-bold mb-1">{job.title}</Text>
                   <View className="py-1 px-3 bg-blue-100 rounded-md">
                     <Text className="text-sm font-psemibold text-blue-600">
-                      Apply
+                      View
                     </Text>
                   </View>
                 </View>

@@ -52,6 +52,18 @@ export default function RootLayout() {
             },
           }}
         />
+        <Stack.Screen
+          name="viewapplications/[job_id]"
+          options={{
+            headerShown: true,
+            headerTitle: "Job Applications",
+            headerTitleStyle: {
+              fontSize: 20,
+              fontWeight: "semibold",
+              color: "#1f2937",
+            },
+          }}
+        />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
