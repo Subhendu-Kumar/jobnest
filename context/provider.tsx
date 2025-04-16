@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     initAuth();
-  }, []);
+  }, [isAuthenticated]);
 
   const login = async (token: string, userData: User, role: UserRole) => {
     await saveToken(token);
@@ -38,6 +38,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     await saveRole(role);
     setIsAuthenticated(true);
     setUserState(userData);
+    setRole(role)
   };
 
   const logout = async () => {

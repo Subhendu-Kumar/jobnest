@@ -40,12 +40,13 @@ const signin = () => {
         name: data.name,
       };
       await login(data.token, user, data.role);
-      if (data.role === "EMPLOYER") {
-        router.replace("/home");
-      }
-      if (data.role === "APPLICANT") {
-        router.replace("/dashboard");
-      }
+      // if (data.role === "EMPLOYER") {
+      //   router.replace("/home");
+      // }
+      // if (data.role === "APPLICANT") {
+      //   router.replace("/dashboard");
+      // }
+      router.replace("/")
     } catch (error: any) {
       Alert.alert("Error", "Something went wrong. Please try again.");
       console.log(error);

@@ -16,12 +16,11 @@ import { router } from "expo-router";
 const home = () => {
   const { user } = useAuth();
   const [jobs, setJobs] = useState<JobPost[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
   const fetchJobs = async () => {
     try {
-      setLoading(true);
       const res = await API.get("/jobs/my");
       setJobs(res.data);
     } catch (error) {
